@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><meta name="viewport" content="width=device-width,initial-scale=1"><title>A1 Infratech CRM</title>
+<style>
+:root{--n:#0b1b2e;--b:#05a3e0;--bg:#f3f6fa;--l:#e2e8f0;--m:#64748b}*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;font:14px/1.45 Inter,system-ui,Segoe UI,Roboto,sans-serif;background:var(--bg);color:#0f172a}button,input,select,textarea{font:inherit}
+input,select,textarea{width:100%;padding:9px 11px;border:1px solid #cbd5e1;border-radius:8px;background:#fff;margin:0 0 10px}input:focus,select:focus,textarea:focus{outline:2px solid var(--b);border-color:transparent}
+.top{background:var(--n);color:#fff;display:flex;align-items:center;gap:10px;padding:12px 24px}.top b{letter-spacing:.06em;font-size:16px}.top span{color:#8fb4d0;font-size:12px}.sp{flex:1}
+.btn{display:inline-block;border:1px solid var(--l);background:#fff;color:inherit;border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:600;text-decoration:none;text-align:center}.btn.p{background:var(--b);border-color:var(--b);color:#fff}.top .btn:not(.p){background:none;color:#fff;border-color:#2c4660}
+main{max-width:1280px;margin:0 auto;padding:22px}.c{background:#fff;border:1px solid var(--l);border-radius:12px}
+.k{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:16px}.k .c{padding:14px 16px}.k small,td small{color:var(--m)}.k h3{margin:2px 0 0;font-size:26px}
+.f{display:flex;flex-wrap:wrap;gap:10px;padding:12px;border-bottom:1px solid var(--l);align-items:center}.f select,.f input{width:auto;margin:0}.f input{flex:1;min-width:180px}
+.tb{display:flex;background:var(--bg);border-radius:8px;padding:3px}.tb button{border:0;background:none;padding:6px 12px;border-radius:6px;cursor:pointer;font-weight:600;color:var(--m)}.tb .on{background:#fff;color:#0f172a;box-shadow:0 1px 2px #0002}
+table{width:100%;border-collapse:collapse;min-width:820px}th{text-align:left;font-size:12px;color:var(--m);text-transform:uppercase;letter-spacing:.04em;padding:10px 14px;background:#f8fafc}td{padding:11px 14px;border-top:1px solid var(--l)}tbody tr{cursor:pointer}tbody tr:hover{background:#f8fafc}.em{text-align:center;color:var(--m);padding:40px}
+.bd{font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:99px}.customer{background:#e0f2fe;color:#0369a1}.partner{background:#ede9fe;color:#6d28d9}
+.st{width:auto;margin:0;font-weight:700;padding:5px 8px}
+#dr{position:fixed;top:0;right:0;bottom:0;width:400px;max-width:100%;border-radius:0;padding:22px;overflow:auto;z-index:5;box-shadow:-10px 0 30px #0002}#dr h2{margin:0 0 6px}.x{position:absolute;top:10px;right:14px;border:0;background:none;font-size:26px;cursor:pointer;color:var(--m)}
+.ac{display:flex;gap:8px;margin:14px 0}.ac .btn{flex:1}dl{display:grid;grid-template-columns:90px 1fr;gap:6px 10px;margin:0 0 14px}dt{color:var(--m)}dd{margin:0;word-break:break-word}h4{margin:14px 0 6px;font-size:12px;text-transform:uppercase;color:var(--m)}pre{white-space:pre-wrap;font:inherit;background:var(--bg);padding:10px;border-radius:8px;margin:0 0 8px}
+.mdl,.lg{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#0b1b2eb0;z-index:9;padding:16px}.lg{background:var(--n)}.mdl form,.lg form{width:min(400px,100%);padding:24px}h2,h3{margin-top:0}.er{color:#dc2626;margin-bottom:8px}
+</style></head><body>
+<div class="lg" id="lg"><form class="c" id="lf"><h2>A1 Infratech CRM</h2><input id="u" placeholder="Username" autocomplete="username"><input id="pw" type="password" placeholder="Password" autocomplete="current-password"><div class="er" id="le"></div><button class="btn p" style="width:100%">Sign in</button></form></div>
+<div id="app" hidden>
+<div class="top"><b>A1 INFRATECH</b><span>Sales CRM</span><i class="sp"></i><button class="btn" id="ex">Export CSV</button><button class="btn p" id="ad">+ Add lead</button><button class="btn" id="lo">Log out</button></div>
+<main><div class="k" id="k"></div>
+<div class="c"><div class="f"><div class="tb" id="tb"><button data-t="all" class="on">All</button><button data-t="customer">Customers</button><button data-t="partner">Channel partners</button></div><select id="fs"></select><input id="q" placeholder="Search name, phone, email, property…"><button class="btn" id="bd" style="color:#dc2626" hidden>Delete selected</button></div>
+<div style="overflow:auto"><table><thead><tr><th style="width:36px"><input type="checkbox" id="ca" style="width:auto;margin:0"></th><th>Lead</th><th>Type</th><th>Interest</th><th>Status</th><th>Assigned</th><th>Source</th><th>Received</th><th></th></tr></thead><tbody id="tr"></tbody></table></div></div></main>
+<aside id="dr" class="c" hidden></aside>
+<div class="mdl" id="md" hidden><form class="c" id="mf"><h3>Add lead manually</h3><select name="type" id="mt"><option value="customer">Customer</option><option value="partner">Channel partner</option></select><input name="name" placeholder="Full name *" required><input name="phone" placeholder="Phone *" required><input name="email" placeholder="Email"><input name="property" class="cu" placeholder="Property interested in"><input name="experience" class="pa" placeholder="Experience (e.g. 3 years)" hidden><input name="profession" class="pa" placeholder="Profession" hidden><textarea name="message" rows="3" placeholder="Message / notes"></textarea><div class="er" id="me"></div><div class="ac"><button type="button" class="btn" onclick="$('#md').hidden=1">Cancel</button><button class="btn p">Save lead</button></div></form></div>
+</div>
+<script>
+const $=s=>document.querySelector(s),ST=["New","Contacted","Site Visit","Negotiation","Won","Lost"],COL={New:"#0284c7",Contacted:"#7c3aed","Site Visit":"#d97706",Negotiation:"#db2777",Won:"#16a34a",Lost:"#64748b"};let L=[],tab="all",sel=0,VR=[];const S=new Set();
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])),fd=i=>new Date(i+"Z").toLocaleString("en-IN",{day:"numeric",month:"short",hour:"numeric",minute:"2-digit"});
+const show=v=>{$("#lg").hidden=v;$("#app").hidden=!v};
+async function api(u,m,b){const r=await fetch(u,{method:m||"GET",headers:{"Content-Type":"application/json"},body:b?JSON.stringify(b):undefined});if(r.status===401&&u!="/api/login"){show(0);throw 0}const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||"Error");return j}
+const load=async()=>{L=await api("/api/leads");draw()};
+const intr=l=>esc(l.type=="partner"?[l.profession,l.experience].filter(Boolean).join(" · "):l.property)||"—";
+function draw(){const day=new Date().toDateString(),n=f=>L.filter(f).length;
+$("#k").innerHTML=[["Total leads",L.length],["New",n(l=>l.status=="New")],["Today",n(l=>new Date(l.created_at+"Z").toDateString()==day)],["Customers",n(l=>l.type=="customer")],["Channel partners",n(l=>l.type=="partner")],["Won",n(l=>l.status=="Won")]].map(([a,b])=>`<div class="c"><small>${a}</small><h3>${b}</h3></div>`).join("");
+const q=$("#q").value.toLowerCase(),s=$("#fs").value,R=L.filter(l=>(tab=="all"||l.type==tab)&&(!s||l.status==s)&&(!q||[l.name,l.phone,l.email,l.property,l.profession].join(" ").toLowerCase().includes(q)));
+$("#tr").innerHTML=R.map(l=>`<tr onclick="op(${l.id})"><td onclick="event.stopPropagation()"><input type="checkbox" class="ck" value="${l.id}"${S.has(l.id)?" checked":""} style="width:auto;margin:0"></td><td><b>${esc(l.name)}</b><br><small>${esc(l.phone)}${l.email?" · "+esc(l.email):""}</small></td><td><span class="bd ${l.type}">${l.type=="partner"?"Partner":"Customer"}</span></td><td>${intr(l)}</td><td onclick="event.stopPropagation()"><select class="st" style="color:${COL[l.status]}" onchange="up(${l.id},{status:this.value})">${ST.map(x=>`<option${x==l.status?" selected":""}>${x}</option>`).join("")}</select></td><td>${esc(l.assigned)||"—"}</td><td>${l.source=="manual"?"Manual":"Website"}</td><td>${fd(l.created_at)}</td><td onclick="event.stopPropagation()"><button class="btn" style="color:#dc2626;padding:4px 10px" onclick="del(${l.id})">Delete</button></td></tr>`).join("")||'<tr><td colspan="9" class="em">No leads found</td></tr>';
+VR=R.map(l=>l.id);for(const i of[...S])if(!L.some(l=>l.id==i))S.delete(i);$("#ca").checked=!!VR.length&&VR.every(i=>S.has(i));$("#bd").hidden=!S.size;$("#bd").textContent="Delete selected ("+S.size+")"}
+function op(id){sel=id;const l=L.find(x=>x.id==id);if(!l)return cl();const p=String(l.phone).replace(/\D/g,"").slice(-10);
+$("#dr").hidden=0;$("#dr").innerHTML=`<button class="x" onclick="cl()">×</button><h2>${esc(l.name)}</h2><span class="bd ${l.type}">${l.type=="partner"?"Channel partner":"Customer"}</span>
+<div class="ac"><a class="btn p" href="tel:${p}">Call</a><a class="btn" target="_blank" href="https://wa.me/91${p}">WhatsApp</a></div>
+<dl><dt>Phone</dt><dd>${esc(l.phone)}</dd><dt>Email</dt><dd>${esc(l.email)||"—"}</dd><dt>${l.type=="partner"?"Profession":"Property"}</dt><dd>${esc(l.type=="partner"?l.profession:l.property)||"—"}</dd>${l.type=="partner"?`<dt>Experience</dt><dd>${esc(l.experience)||"—"}</dd>`:""}<dt>Source</dt><dd>${l.source=="manual"?"Added manually":"Website form"}</dd><dt>Received</dt><dd>${fd(l.created_at)}</dd></dl>
+${l.message?`<h4>Message</h4><pre>${esc(l.message)}</pre>`:""}<h4>Status</h4><select onchange="up(${l.id},{status:this.value})">${ST.map(x=>`<option${x==l.status?" selected":""}>${x}</option>`).join("")}</select>
+<h4>Assigned to</h4><input value="${esc(l.assigned)}" placeholder="Sales team member" onchange="up(${l.id},{assigned:this.value})"><h4>Notes</h4>${l.notes?`<pre>${esc(l.notes)}</pre>`:""}<textarea id="nt" rows="3" placeholder="Add a note (call outcome, next step…)"></textarea>
+<button class="btn p" onclick="up(${l.id},{note:$('#nt').value})">Add note</button> <button class="btn" style="color:#dc2626" onclick="del(${l.id})">Delete</button>`}
+const cl=()=>{sel=0;$("#dr").hidden=1};
+const up=async(id,b)=>{await api("/api/leads/"+id,"PATCH",b);await load();if(sel)op(sel)};
+const del=async id=>{if(confirm("Delete this lead permanently?")){await api("/api/leads/"+id,"DELETE");cl();load()}};
+$("#fs").innerHTML='<option value="">All statuses</option>'+ST.map(x=>`<option>${x}</option>`).join("");$("#fs").onchange=$("#q").oninput=draw;
+$("#tr").onchange=e=>{if(e.target.classList.contains("ck")){const i=+e.target.value;e.target.checked?S.add(i):S.delete(i);draw()}};
+$("#ca").onchange=e=>{VR.forEach(i=>e.target.checked?S.add(i):S.delete(i));draw()};
+$("#bd").onclick=async()=>{if(!confirm("Permanently delete "+S.size+" selected lead(s)?"))return;await api("/api/leads/delete","POST",{ids:[...S]});if(S.has(sel))cl();S.clear();load()};
+$("#tb").onclick=e=>{const t=e.target.dataset.t;if(!t)return;tab=t;document.querySelectorAll("#tb button").forEach(b=>b.classList.toggle("on",b.dataset.t==t));draw()};
+$("#ad").onclick=()=>{$("#mf").reset();$("#mt").onchange();$("#me").textContent="";$("#md").hidden=0};
+$("#mt").onchange=()=>{const p=$("#mt").value=="partner";document.querySelectorAll("#mf .cu").forEach(e=>e.hidden=p);document.querySelectorAll("#mf .pa").forEach(e=>e.hidden=!p)};
+$("#mf").onsubmit=async e=>{e.preventDefault();try{await api("/api/leads","POST",{...Object.fromEntries(new FormData(e.target)),source:"manual"});$("#md").hidden=1;load()}catch(x){$("#me").textContent=x.message}};
+$("#lf").onsubmit=async e=>{e.preventDefault();try{await api("/api/login","POST",{user:$("#u").value,pass:$("#pw").value});show(1);load()}catch(x){$("#le").textContent=x.message}};
+$("#lo").onclick=async()=>{await api("/api/logout","POST");show(0)};$("#ex").onclick=()=>location.href="/api/export.csv";
+api("/api/me").then(r=>{if(r.ok){show(1);load()}else show(0)});setInterval(()=>{if(!$("#app").hidden)load().catch(()=>{})},20000);
+</script></body></html>
