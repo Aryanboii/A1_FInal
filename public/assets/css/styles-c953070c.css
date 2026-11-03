@@ -3279,3 +3279,12 @@ img,video {
   text-align:center;
   padding:24px 0;
 }
+
+/* v5: all projects visible - consistent backgrounds and scroll offset */
+.dk.pj {
+  background: linear-gradient(180deg, #1479b8, #0f6aa5);
+  --sbg: #1479b8;
+}
+.pj {
+  scroll-margin-top: 64px;
+}
