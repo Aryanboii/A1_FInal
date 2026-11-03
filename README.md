@@ -24,4 +24,19 @@ Vercel -> Project -> Settings -> Domains -> add your domain, then add the DNS re
 `SUPABASE_URL=... SUPABASE_SERVICE_KEY=... CRM_PASS=... node dev.js` -> http://localhost:3000
 
 ## Folders
-`public/` website + CRM + assets - `api/` serverless functions - `vercel.json` routes/headers - `supabase.sql` table
+```
+public/
+  index.html        website (sections are commented: Header, Main, Project 1..7, Company profile, Channel partner, Footer)
+  crm.html          CRM page
+  404.html          "page not found" page
+  robots.txt
+  assets/
+    css/            styles-*.css (website), crm-*.css
+    js/             site-*.js (overlay/counters), forms-*.js (enquiry + partner form), projects-*.js (project tabs), crm-*.js
+    img/, vid/      photos and videos
+api/                serverless functions (leads, login, export, health)
+vercel.json         routes + headers
+supabase.sql        database table
+```
+Asset file names contain a content code (for example `team-manoj-92db0782.jpg`). When you replace a photo, give it a new name
+(or change the code) so visitors do not see the old cached image, and update the path in `index.html`.
