@@ -3288,3 +3288,94 @@ img,video {
 .pj {
   scroll-margin-top: 64px;
 }
+
+
+/* v6: Aditya project cards, payment tiles, company profile */
+.phead { margin: 6px 0 30px; }
+.acards { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 22px; margin: 8px 0 22px; }
+.acard { background: #fff; color: #0b2540; border-radius: 22px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 14px 34px rgba(4, 30, 54, .22); transition: transform .35s, box-shadow .35s; }
+.acard:hover { transform: translateY(-6px); box-shadow: 0 22px 44px rgba(4, 30, 54, .32); }
+.acard > img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+.acard .ab { display: flex; flex-direction: column; gap: 10px; padding: 20px 22px 22px; flex: 1; }
+.acard .abadge { align-self: flex-start; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #0e5f96; background: #e6f1fa; padding: 5px 11px; border-radius: 99px; }
+.acard h3 { margin: 2px 0 0; font-size: 24px; line-height: 1.15; color: #0b2540; }
+.acard .cfg { margin: 0; color: #47607a; font-size: 14px; }
+.acard .prc small { display: block; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: #6b7f93; }
+.acard .prc b { display: block; font-size: 25px; color: #0e5f96; margin-top: 2px; }
+.acard .ak { margin: 2px 0 0; padding: 0; list-style: none; display: grid; gap: 7px; font-size: 13.5px; line-height: 1.45; color: #2c4660; }
+.acard .ak li { position: relative; padding-left: 18px; }
+.acard .ak li::before { content: ""; position: absolute; left: 0; top: .55em; width: 7px; height: 7px; border-radius: 50%; background: #ffb020; }
+.acard details { border-top: 1px solid #e3ecf4; padding-top: 10px; margin-top: auto; }
+.acard summary { cursor: pointer; font-weight: 700; font-size: 14px; color: #0e5f96; list-style: none; }
+.acard summary::after { content: "+"; float: right; font-size: 18px; line-height: 1; }
+.acard details[open] summary::after { content: "–"; }
+.acard table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; }
+.acard th { text-align: left; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #6b7f93; padding: 6px 4px; border-bottom: 1px solid #d4e4f2; }
+.acard td { padding: 8px 4px; border-bottom: 1px solid #edf3f9; color: #1d3550; }
+.acard td:last-child { font-weight: 700; text-align: right; white-space: nowrap; }
+.acard .note { margin: 10px 0 0; font-size: 12px; line-height: 1.5; color: #6b7f93; }
+.acard .btn { margin-top: 6px; width: 100%; }
+.pay { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin: 16px 0 6px; }
+.pay .pt { border-radius: 14px; padding: 12px 14px; background: rgba(255, 255, 255, .12); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .22); }
+.pay .pt span { display: block; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; opacity: .75; }
+.pay .pt b { display: block; font-size: 22px; margin-top: 2px; }
+.pay .pt small { display: block; font-size: 11.5px; opacity: .75; }
+.lt .pay .pt { background: #eef5fb; box-shadow: inset 0 0 0 1px #d4e4f2; color: #0b2540; }
+.team { background: radial-gradient(900px 420px at 85% -8%, rgba(255, 176, 32, .18), transparent 60%), linear-gradient(180deg, #0b3a5c, #0e5f96); color: #fff; position: relative; overflow: hidden; }
+.team .tg { color: #ffb020; }
+.team h2, .team h2 * { color: #fff; }
+.team-lead { color: rgba(255, 255, 255, .8); }
+.team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 34px; }
+.team-card { position: relative; border-radius: 22px; overflow: hidden; background: #0b3a5c; box-shadow: 0 14px 34px rgba(0, 0, 0, .28); isolation: isolate; transition: transform .4s, box-shadow .4s; }
+.team-card:hover { transform: translateY(-8px); box-shadow: 0 22px 46px rgba(0, 0, 0, .4); }
+.team-card img, .team-card .ph { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: center top; transition: transform .6s; }
+.team-card:hover img { transform: scale(1.05); }
+.team-card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, .26) 50%, transparent 65%); transform: translateX(-120%); transition: transform .9s; pointer-events: none; z-index: 2; }
+.team-card:hover::after { transform: translateX(120%); }
+.team-card div { position: absolute; left: 0; right: 0; bottom: 0; padding: 56px 16px 16px; background: linear-gradient(180deg, transparent, rgba(5, 24, 41, .95)); z-index: 1; }
+.team-card b { display: block; font-size: 18px; line-height: 1.2; color: #fff; }
+.team-card span:not(.ph) { display: block; margin-top: 4px; font-size: 12.5px; line-height: 1.35; color: #ffb020; font-weight: 600; letter-spacing: .02em; }
+.team-card--ceo { box-shadow: 0 0 0 3px #ffb020, 0 18px 40px rgba(0, 0, 0, .4); }
+.team-card .ph { display: grid; place-items: center; background: linear-gradient(145deg, #1479b8, #0b3a5c); font-size: clamp(54px, 7vw, 92px); font-weight: 700; color: rgba(255, 255, 255, .88); }
+@media (max-width: 900px) {
+  .team-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .team-card { border-radius: 16px; }
+  .team-card b { font-size: 15px; }
+  .team-card span:not(.ph) { font-size: 11.5px; }
+  .team-card div { padding: 40px 12px 12px; }
+  .acards { grid-template-columns: 1fr; }
+}
+
+/* v7: company details strip */
+.company-info {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-top: 28px;
+}
+.company-info div {
+  padding: 16px 18px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, .1);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .22);
+  backdrop-filter: blur(6px);
+}
+.company-info small {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .7);
+}
+.company-info b {
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  word-break: break-word;
+}
+@media (max-width: 900px) {
+  .company-info { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .company-info div { padding: 13px 14px; }
+  .company-info b { font-size: 13.5px; }
+}
