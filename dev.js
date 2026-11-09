@@ -1,6 +1,6 @@
 // Local test server that mimics Vercel: node dev.js  (needs the same env vars as production)
 const http = require("http"), fs = require("fs"), path = require("path");
-const MIME = { ".html": "text/html; charset=utf-8", ".jpg": "image/jpeg", ".png": "image/png", ".mp4": "video/mp4", ".webp": "image/webp" };
+const MIME = { ".html": "text/html; charset=utf-8", ".css": "text/css; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".json": "application/json", ".txt": "text/plain; charset=utf-8", ".svg": "image/svg+xml", ".jpg": "image/jpeg", ".png": "image/png", ".webp": "image/webp", ".mp4": "video/mp4" };
 const route = p => { const s = p.replace(/^\/api\//, "").replace(/\.csv$/, ""); const f = ["", "/index"].map(x => `./api/${s}${x}.js`).find(x => fs.existsSync(x));
   if (f) return [require(f), {}]; const [a, id] = s.split("/"); return fs.existsSync(`./api/${a}/[id].js`) ? [require(`./api/${a}/[id].js`), { id }] : [null, {}]; };
 http.createServer((req, res) => {
