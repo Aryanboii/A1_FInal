@@ -1,5 +1,5 @@
 (function(){const eq=document.getElementById("eq"),f=eq.querySelector("form"),fl=f.querySelector(".fl"),ok=f.querySelector(".ok"),el=f.elements,M={};let T="customer";
-["dehradun","aero","aditya","villa","vinayak","ahilya","khatu","ghaziabad"].forEach(id=>{const h=document.querySelector("#"+id+" h2");if(h)M[id]=h.textContent.replace(/\s+/g," ").trim()});
+["dehradun","aditya","villa","vinayak","ahilya","khatu","ghaziabad"].forEach(id=>{const h=document.querySelector("#"+id+" h2");if(h)M[id]=h.textContent.replace(/\s+/g," ").trim()});
 el.property.innerHTML='<option value="">Select a property</option>'+Object.values(M).map(v=>"<option>"+v+"</option>").join("")+"<option>Not sure — suggest me</option>";
 function open(m,sec,nm,prop){T=m;f.reset();fl.hidden=false;ok.hidden=true;f.querySelector(".er").textContent="";
 eq.querySelectorAll(".cu").forEach(e=>e.hidden=m!="customer");eq.querySelectorAll(".pa").forEach(e=>e.hidden=m!="partner");
