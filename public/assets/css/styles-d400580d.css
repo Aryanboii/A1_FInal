@@ -3703,3 +3703,7 @@ button, a { -webkit-tap-highlight-color: transparent; touch-action: manipulation
 
 /* v13e: rail full bleed */
 .rail { width: calc(100% + var(--pad) * 2) !important; max-width: none !important; }
+
+/* v15: no repeated project chips, collage illustrations */
+.ptabs { display: none !important; }
+.pn-photos svg { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; }
