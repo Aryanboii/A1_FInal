@@ -1,42 +1,72 @@
-# A1 Infratech - Website + CRM (Vercel + Supabase)
+# A1 Infratech
 
-Website: `/`  -  CRM: `/crm` (login with CRM_USER / CRM_PASS)  -  Health check: `/api/health`
+A modern real estate website and management platform built to showcase property projects, generate customer enquiries, and manage business leads efficiently.
 
-All enquiry and channel-partner forms save into the Supabase table `leads`. Nothing is stored on the server disk, so leads never disappear
-when Vercel redeploys. Leads are removed only when you delete them in the CRM.
+## Features
 
-## One-time setup
-1. **Supabase** -> SQL Editor -> run `supabase.sql` (skip if already done). Project Settings -> API Keys: copy the Project URL and the **secret** key
-   (`sb_secret_...`) or the legacy `service_role` key. Never use the publishable / anon key.
-2. **GitHub**: replace the repo contents with this folder, commit and push.
-3. **Vercel**: import the repo (Framework "Other"; `vercel.json` sets the rest). Environment Variables:
-   `SUPABASE_URL`, `SUPABASE_SERVICE_KEY`, `CRM_USER`, `CRM_PASS` (strong password); optional `SESSION_SECRET`, `LEAD_WEBHOOK_URL`.
-4. Deploy, open `https://YOUR-DOMAIN/api/health` (it must say `"ok": true`), submit a test enquiry and check `/crm`.
+- **Responsive Website** – Modern and mobile-friendly real estate website.
+- **Property Showcase** – Display residential and commercial projects.
+- **Lead Management** – Centralized CRM to manage customer enquiries.
+- **Admin Dashboard** – Manage leads and business operations.
+- **Lead Tracking** – Organize and monitor customer enquiries.
+- **Authentication** – Secure admin login and access management.
+- **Database Integration** – Supabase-powered data storage.
+- **Enquiry Management** – Capture and manage potential buyers.
+- **SEO Friendly** – Structured website designed for search engine visibility.
 
-## If a form shows an error
-Open `/api/health`: it says exactly what is wrong (missing variables, wrong key type, or missing `leads` table). Fix it, then redeploy.
+## Technology Stack
 
-## Connecting your domain
-Vercel -> Project -> Settings -> Domains -> add your domain, then add the DNS records Vercel shows at your domain provider
-(usually A `76.76.21.21` for the root domain and CNAME `cname.vercel-dns.com` for `www`; use the exact values Vercel displays).
+- HTML5
+- CSS3
+- JavaScript
+- Node.js
+- Express.js
+- Supabase
+- PostgreSQL
+- Vercel
 
-## Local test
-`SUPABASE_URL=... SUPABASE_SERVICE_KEY=... CRM_PASS=... node dev.js` -> http://localhost:3000
+## Getting Started
 
-## Folders
+### Clone the Repository
+
+```bash
+git clone https://github.com/Aryanboii/A1_FInal.git
+
+cd A1_FInal
 ```
-public/
-  index.html        website (sections are commented: Header, Main, Project 1..7, Company profile, Channel partner, Footer)
-  crm.html          CRM page
-  404.html          "page not found" page
-  robots.txt
-  assets/
-    css/            styles-*.css (website), crm-*.css
-    js/             site-*.js (overlay/counters), forms-*.js (enquiry + partner form), projects-*.js (project tabs), crm-*.js
-    img/, vid/      photos and videos
-api/                serverless functions (leads, login, export, health)
-vercel.json         routes + headers
-supabase.sql        database table
+
+### Install Dependencies
+
+```bash
+npm install
 ```
-Asset file names contain a content code (for example `team-manoj-92db0782.jpg`). When you replace a photo, give it a new name
-(or change the code) so visitors do not see the old cached image, and update the path in `index.html`.
+
+### Environment Configuration
+
+Configure the required Supabase credentials and environment variables.
+
+### Run Locally
+
+```bash
+npm start
+```
+
+Open your local application in the browser.
+
+## Project Purpose
+
+A1 Infratech aims to simplify real estate business operations by combining an online property presence with an integrated lead management system.
+
+## Deployment
+
+The application is deployed using Vercel.
+
+## Author
+
+**A1 Infratech**
+
+GitHub: [Aryanboii](https://github.com/Aryanboii)
+
+---
+
+Built with ❤️
