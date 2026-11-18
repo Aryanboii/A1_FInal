@@ -15,11 +15,25 @@ const out = (res, code, body, type = "application/json", extra = {}) => {
 };
 const body = req => { const b = req.body; if (b && typeof b === "object") return b; try { return JSON.parse(b || "{}"); } catch { return {}; } };
 
+const classify = (status, text) =>
+  /PGRST204|42703|column .* does not exist|Could not find the '.*' column/i.test(text) ? "column"
+  : /PGRST205|42P01|Could not find the table|relation .* does not exist/i.test(text) ? "table"
+  : status === 401 || status === 403 || /JWT|apikey|permission denied|row-level security|42501/i.test(text) ? "key"
+  : status === 404 ? "url" : "db";
+const HINTS = {
+  config: "Add SUPABASE_URL and SUPABASE_SERVICE_KEY in Vercel > Settings > Environment Variables (Production), then redeploy.",
+  url: "SUPABASE_URL looks wrong. It must look like https://xxxxxxxx.supabase.co (Supabase > Project Settings > API > Project URL).",
+  key: "Supabase rejected the key. Use the SECRET key (sb_secret_...) or the legacy service_role key as SUPABASE_SERVICE_KEY - not the publishable / anon key.",
+  table: "The table 'leads' does not exist. Copy the SQL below, paste it in Supabase > SQL Editor and press Run.",
+  column: "The table 'leads' is missing some columns. Copy the SQL below, paste it in Supabase > SQL Editor and press Run (it repairs the table).",
+  db: "Supabase returned an unexpected error. Check Vercel > Logs for the exact message."
+};
+const SQL_FIX = require("fs").existsSync(require("path").join(__dirname, "..", "supabase.sql")) ? require("fs").readFileSync(require("path").join(__dirname, "..", "supabase.sql"), "utf8") : "";
 async function sb(qs, o = {}) {
-  if (!SBU || !SBK) throw new Error("SUPABASE_URL / SUPABASE_SERVICE_KEY are not set");
+  if (!SBU || !SBK) { const e = new Error("SUPABASE_URL / SUPABASE_SERVICE_KEY are not set"); e.code = "config"; throw e; }
   const hd = { apikey: SBK, ...(SBK.startsWith("sb_") ? {} : { Authorization: "Bearer " + SBK }), "Content-Type": "application/json", Prefer: "return=representation" };
-  let r; for (let i = 0; i < 2; i++) { try { r = await fetch(`${SBU}/rest/v1/leads${qs}`, { ...o, headers: hd }); if (r.status < 500) break; } catch (e) { if (i) throw e; } await new Promise(x => setTimeout(x, 400)); }
-  if (!r.ok) { const e = new Error(`Supabase ${r.status}: ${await r.text()}`); e.status = r.status; throw e; }
+  let r; for (let i = 0; i < 2; i++) { try { r = await fetch(`${SBU}/rest/v1/leads${qs}`, { ...o, headers: hd }); if (r.status < 500) break; } catch (e) { if (i) { e.code = "url"; throw e; } } await new Promise(x => setTimeout(x, 400)); }
+  if (!r.ok) { const t = await r.text(), e = new Error(`Supabase ${r.status}: ${t}`); e.status = r.status; e.code = classify(r.status, t); throw e; }
   return r.status === 204 ? [] : r.json();
 }
 const list = async () => { let all = [], o = 0, b; do { b = await sb(`?select=*&order=id.desc&limit=1000&offset=${o}`); all = all.concat(b); o += 1000; } while (b.length === 1000); return all; };
@@ -51,11 +65,17 @@ async function create(req, d, manual) {
     message: g("message", 1000), experience: g("experience", 60), profession: g("profession", 100), source: manual ? "manual" : "website",
     status: "New", assigned: "", notes: "", created_at: ts, updated_at: ts };
   const since = new Date(Date.now() - 10 * 60 * 1000).toISOString().slice(0, 19);      // ignore double-submits / retries
-  const dup = (await sb(`?phone=eq.${encodeURIComponent(phone)}&type=eq.${row.type}&created_at=gte.${since}&select=id&limit=1`))[0];
+  let dup = null; try { dup = (await sb(`?phone=eq.${encodeURIComponent(phone)}&type=eq.${row.type}&created_at=gte.${since}&select=id&limit=1`))[0]; } catch {}
   if (dup) return [200, { ok: true, id: dup.id }];
-  const saved = (await sb("", { method: "POST", body: JSON.stringify(row) }))[0];
+  let saved;
+  try { saved = (await sb("", { method: "POST", body: JSON.stringify(row) }))[0]; }
+  catch (e) {
+    console.error("LEAD_NOT_SAVED [" + (e.code || "?") + "] " + e.message + " | " + JSON.stringify(row));      // recoverable from Vercel > Logs
+    if (E.LEAD_WEBHOOK_URL) { try { const w = await Promise.race([fetch(E.LEAD_WEBHOOK_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...row, saved: false }) }), new Promise((_, j) => setTimeout(() => j(new Error("timeout")), 4000))]); if (w.ok) return [200, { ok: true, queued: true }]; } catch {} }
+    throw e;
+  }
   if (E.LEAD_WEBHOOK_URL) { try { await Promise.race([fetch(E.LEAD_WEBHOOK_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(saved) }), new Promise(r => setTimeout(r, 4000))]); } catch {} }
   return [200, { ok: true, id: saved.id }];
 }
 const guard = fn => async (req, res) => { try { await fn(req, res); } catch (e) { console.error(e); out(res, 500, { error: "Server error. Please try again." }); } };
-module.exports = { SBU, SBK, out, body, sb, list, token, authed, same, now, create, guard, STATUSES, USER, PASS };
+module.exports = { HINTS, SQL_FIX, SBU, SBK, out, body, sb, list, token, authed, same, now, create, guard, STATUSES, USER, PASS };

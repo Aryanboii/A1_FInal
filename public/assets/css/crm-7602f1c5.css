@@ -320,3 +320,7 @@ h2,h3 {
   color:#dc2626;
   margin-bottom:8px;
 }
+
+.hb { max-width: 1280px; margin: 18px auto 0; padding: 16px 20px; background: #fff3f3; border: 2px solid #d9362b; border-radius: 12px; color: #5a0f0a; }
+.hb b { font-size: 16px; } .hb p { margin: 6px 0 8px; } .hb small { display: block; color: #8a4a45; margin-bottom: 8px; word-break: break-word; }
+.hb pre { max-height: 220px; overflow: auto; background: #fff; border: 1px solid #e2b8b4; padding: 10px; font-size: 12px; white-space: pre-wrap; margin: 0 0 10px; }

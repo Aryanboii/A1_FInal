@@ -27,6 +27,19 @@ $("#tb").onclick=e=>{const t=e.target.dataset.t;if(!t)return;tab=t;document.quer
 $("#ad").onclick=()=>{$("#mf").reset();$("#mt").onchange();$("#me").textContent="";$("#md").hidden=0};
 $("#mt").onchange=()=>{const p=$("#mt").value=="partner";document.querySelectorAll("#mf .cu").forEach(e=>e.hidden=p);document.querySelectorAll("#mf .pa").forEach(e=>e.hidden=!p)};
 $("#mf").onsubmit=async e=>{e.preventDefault();try{await api("/api/leads","POST",{...Object.fromEntries(new FormData(e.target)),source:"manual"});$("#md").hidden=1;load()}catch(x){$("#me").textContent=x.message}};
-$("#lf").onsubmit=async e=>{e.preventDefault();try{await api("/api/login","POST",{user:$("#u").value,pass:$("#pw").value});show(1);load()}catch(x){$("#le").textContent=x.message}};
+$("#lf").onsubmit=async e=>{e.preventDefault();try{await api("/api/login","POST",{user:$("#u").value,pass:$("#pw").value});show(1);load();health()}catch(x){$("#le").textContent=x.message}};
 $("#lo").onclick=async()=>{await api("/api/logout","POST");show(0)};$("#ex").onclick=()=>location.href="/api/export.csv";
-api("/api/me").then(r=>{if(r.ok){show(1);load()}else show(0)});setInterval(()=>{if(!$("#app").hidden)load().catch(()=>{})},20000);
+api("/api/me").then(r=>{if(r.ok){show(1);load();health()}else show(0)});setInterval(()=>{if(!$("#app").hidden)load().catch(()=>{})},20000);
+
+// Connection check: tells you why website forms would not be saved (missing keys, missing table ...)
+async function health() {
+  const b = document.getElementById("hb");
+  try {
+    const r = await fetch("/api/health"), x = await r.json();
+    if (x.ok) { b.hidden = true; return; }
+    b.hidden = false;
+    b.innerHTML = "<b>Website forms cannot save leads yet</b><p>" + esc(x.hint) + "</p>" + (x.detail ? "<small>" + esc(x.detail) + "</small>" : "") +
+      (x.sql ? "<pre>" + esc(x.sql) + "</pre><button class='btn p' id='hc'>Copy SQL</button>" : "");
+    const cb = document.getElementById("hc"); if (cb) cb.onclick = () => navigator.clipboard.writeText(x.sql).then(() => cb.textContent = "Copied");
+  } catch (e) { b.hidden = false; b.innerHTML = "<b>Could not reach the server</b><p>" + esc(e.message) + "</p>"; }
+}

@@ -3711,3 +3711,13 @@ button, a { -webkit-tap-highlight-color: transparent; touch-action: manipulation
 /* v16: three team slots (Hari Om, Aryan, join card) */
 .team-grid { grid-template-columns: repeat(3, 1fr); }
 @media (max-width: 900px) { .team-grid { grid-template-columns: repeat(2, 1fr); } .team-grid .team-cta { grid-column: 1 / -1; } }
+
+/* v17: headings sized for the real (extra wide) Archivo font; JS below fine-tunes any box that is still too narrow */
+.hx h1 { font-size: clamp(36px, 7.2vw, 150px) !important; }
+.h1a > span { white-space: nowrap; }
+h2 { font-size: clamp(30px, 4.7vw, 86px) !important; }
+#vision h2 { font-size: clamp(30px, 4.4vw, 76px) !important; }
+.founder h3 { font-size: clamp(30px, 4.6vw, 78px) !important; }
+.pn-lead { font-size: clamp(22px, 3.4vw, 54px) !important; } .pn-wh { font-size: clamp(26px, 3.6vw, 58px) !important; }
+.build .bd-t h2 { font-size: clamp(30px, 4.6vw, 78px) !important; }
+@media (max-width: 900px) { .hx h1 { font-size: clamp(30px, 9.6vw, 84px) !important; } h2 { font-size: clamp(26px, 8.4vw, 54px) !important; } }

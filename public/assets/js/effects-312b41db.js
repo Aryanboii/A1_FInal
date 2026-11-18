@@ -62,3 +62,19 @@
     el.addEventListener("pointerleave", () => { el.style.transform = ""; });
   });
 })();
+
+// Fit: if a big heading is wider than its box (wide webfont, narrow phone), shrink it until it fits
+(function () {
+  const sel = ".hx h1,h2,.founder h3,.pn-lead,.pn-wh,.pn-card b,.price b,.team-cta b,.stats b,.company-info b,.cmp .r b,.rail b,.pc,.bd-steps li b";
+  const els = [...document.querySelectorAll(sel)];
+  const over = el => el.matches(".hx h1") ? [...el.querySelectorAll(".h1a>span,.h1b>span")].some(s => s.scrollWidth > s.clientWidth + 1) : el.scrollWidth > el.clientWidth + 1;
+  function fit(el) {
+    el.style.removeProperty("font-size");
+    if (getComputedStyle(el).display === "inline" || !el.clientWidth) return;
+    let fs = parseFloat(getComputedStyle(el).fontSize), n = 0;
+    while (over(el) && fs > 11 && n < 28) { fs *= .94; el.style.setProperty("font-size", fs.toFixed(1) + "px", "important"); n++; }
+  }
+  const run = () => els.forEach(fit); let t;
+  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(run);
+  addEventListener("load", run); addEventListener("resize", () => { clearTimeout(t); t = setTimeout(run, 150); });
+})();
